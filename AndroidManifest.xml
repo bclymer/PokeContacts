@@ -5,6 +5,11 @@
     android:versionName="1.0" >
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
 
     <uses-sdk
         android:minSdkVersion="11"
@@ -24,6 +29,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.bclymer.pokecontacts.CryActivity"
+            android:theme="@android:style/Theme.Holo.Light.Dialog.MinWidth" >
         </activity>
     </application>
 

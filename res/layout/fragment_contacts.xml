@@ -1,12 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="#DDDDDD" >
+
+    <TextView
+        android:id="@+id/contacts_fragment_contents_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+        android:text="CONTENTS"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <ListView
         android:id="@+id/contacts_fragment_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/contacts_fragment_contents_text"
+        android:layout_toLeftOf="@+id/contacts_fragment_vertical_line"
+        android:paddingBottom="5dp"
+        android:paddingLeft="5dp"
         android:smoothScrollbar="true" />
+
+    <View
+        android:id="@+id/contacts_fragment_vertical_line"
+        android:layout_width="5px"
+        android:layout_height="match_parent"
+        android:layout_toLeftOf="@+id/contacts_fragment_sidepanel"
+        android:background="#000" />
+
+    <RelativeLayout
+        android:id="@+id/contacts_fragment_sidepanel"
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true" >
+
+        <TextView
+            android:id="@+id/contacts_fragment_own_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="OWN"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/contacts_fragment_contact_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/contacts_fragment_own_text"
+            android:layout_below="@+id/contacts_fragment_own_text"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textStyle="bold" />
+
+        <View
+            android:id="@+id/contacts_fragment_horizontal_line"
+            android:layout_width="match_parent"
+            android:layout_height="3px"
+            android:layout_below="@+id/contacts_fragment_contact_count"
+            android:background="#000" />
+
+        <View
+            android:id="@+id/contacts_fragment_horizontal_line_2"
+            android:layout_width="match_parent"
+            android:layout_height="5px"
+            android:layout_below="@+id/contacts_fragment_horizontal_line"
+            android:layout_marginTop="2px"
+            android:background="#000" />
+
+        <ListView
+            android:id="@+id/contacts_fragment_options_listview"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/contacts_fragment_horizontal_line_2"
+            android:smoothScrollbar="true" />
+    </RelativeLayout>
 
 </RelativeLayout>

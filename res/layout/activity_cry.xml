@@ -1,0 +1,41 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    tools:context=".CryActivity" >
+
+    <ImageButton
+        android:id="@+id/cry_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/play" />
+
+    <ImageButton
+        android:id="@+id/cry_record"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/cry_play"
+        android:layout_toRightOf="@+id/cry_play"
+        android:src="@drawable/record" />
+
+    <Button
+        android:id="@+id/cry_set_ringtone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/cry_play"
+        android:layout_alignRight="@+id/cry_record"
+        android:layout_below="@+id/cry_record"
+        android:text="Apply Ringtone" />
+
+    <Button
+        android:id="@+id/cry_set_ringtone_default"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/cry_play"
+        android:layout_alignRight="@+id/cry_record"
+        android:layout_below="@+id/cry_set_ringtone"
+        android:text="Reset Ringtone" />
+
+</RelativeLayout>

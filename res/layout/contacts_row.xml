@@ -1,37 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center_vertical"
-    android:padding="10dp" >
+    android:layout_height="20dp" >
 
     <ImageView
-        android:id="@+id/contacts_row_icon"
-        android:layout_width="30dp"
-        android:layout_height="30dp" />
-
-    <ImageView
-        android:id="@+id/contacts_row_empty_circle"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_toRightOf="@+id/contacts_row_icon"
-        android:paddingLeft="5dp"
-        android:src="@drawable/circle" />
-
-    <TextView
-        android:id="@+id/contacts_row_number"
+        android:id="@+id/contacts_row_indicator_arrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/contacts_row_empty_circle"
-        android:paddingLeft="5dp"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_alignBottom="@+id/contacts_row_name"
+        android:layout_alignTop="@+id/contacts_row_name"
+        android:src="@drawable/arrow" />
+
+    <TextView
+        android:id="@+id/contacts_row_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/contacts_row_indicator_arrow"
+        android:includeFontPadding="false"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/contacts_row_pokeball"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/contacts_row_name"
+        android:layout_alignRight="@+id/contacts_row_id"
+        android:layout_alignTop="@+id/contacts_row_name"
+        android:layout_below="@+id/contacts_row_id"
+        android:src="@drawable/ball" />
 
     <TextView
         android:id="@+id/contacts_row_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/contacts_row_number"
-        android:paddingLeft="5dp"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_below="@+id/contacts_row_id"
+        android:layout_toRightOf="@+id/contacts_row_id"
+        android:ellipsize="end"
+        android:includeFontPadding="false"
+        android:lines="1"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>
