@@ -100,7 +100,6 @@ public class CryActivity extends Activity {
 				ContentValues localContentValues = new ContentValues();
 				localContentValues.put(ContactsContract.Data.CUSTOM_RINGTONE, mFileName);
 				int rowsUpdated = getContentResolver().update(localUri, localContentValues, null, null);
-				Log.e("", "" + rowsUpdated);
 				if (rowsUpdated > 0) {
 					Toast.makeText(getApplicationContext(), "Ringtone set successfully", Toast.LENGTH_SHORT).show();
 					mContact.ringtone = mFileName;
@@ -116,7 +115,6 @@ public class CryActivity extends Activity {
 				ContentValues localContentValues = new ContentValues();
 				localContentValues.put(ContactsContract.Data.CUSTOM_RINGTONE, (String) null);
 				int rowsUpdated = getContentResolver().update(localUri, localContentValues, null, null);
-				Log.e("", "" + rowsUpdated);
 				if (rowsUpdated > 0) {
 					Toast.makeText(getApplicationContext(), "Ringtone reset successfully", Toast.LENGTH_SHORT).show();
 					mContact.ringtone = null;

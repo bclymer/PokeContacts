@@ -89,7 +89,7 @@ public class ContactListFragment extends SherlockFragment implements OnItemClick
 			long photoId = contactCursor.getLong(contactCursor.getColumnIndex(ContactsContract.CommonDataKinds.Photo.PHOTO_ID));
 			Uri photoUri = ContentUris.withAppendedId(ContactsContract.Data.CONTENT_URI, photoId);
 			String phoneNumber = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-			String email = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.CommonDataKinds.Email.ADDRESS));
+			String email = "";//contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.CommonDataKinds.Email.ADDRESS));
 			String note = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.CommonDataKinds.Note.NOTE));
 			mContacts.add(new Contact(id, name, photoUri, phoneNumber, ringtone, email, note));
 		}
