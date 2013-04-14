@@ -12,6 +12,7 @@ import android.content.DialogInterface.OnCancelListener;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
@@ -57,15 +58,15 @@ public class CryActivity extends Activity {
 			finish();
 			return;
 		}
-		
+
 		mContact = PokeApplication.getInstance().mContacts.get(contactPosition);
 		setTitle(mContact.name + "'s Cry");
 		mFileName = getExternalFilesDir(null).getAbsolutePath();
 		mFileName += "/" + mContact.id + "-" + System.currentTimeMillis() + ".3gp";
-		
+
 		bStop = BitmapFactory.decodeResource(getResources(), R.drawable.stop);
 		bPlay = BitmapFactory.decodeResource(getResources(), R.drawable.play);
-		
+
 		if (mContact.ringtone == null) {
 			vPlay.setEnabled(false);
 		} else {
@@ -78,12 +79,9 @@ public class CryActivity extends Activity {
 			public void onClick(View v) {
 				if (!isPlaying) {
 					startPlaying();
-					vPlay.setImageBitmap(bPlay);
 				} else {
 					stopPlaying();
-					vPlay.setImageBitmap(bStop);
 				}
-				isPlaying = !isPlaying;
 			}
 		});
 		vRecord.setOnClickListener(new OnClickListener() {
@@ -95,50 +93,52 @@ public class CryActivity extends Activity {
 		});
 		vApplyRingtone.setEnabled(false);
 		vApplyRingtone.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				Uri localUri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, Long.toString(mContact.id));
 				ContentValues localContentValues = new ContentValues();
-			    localContentValues.put(ContactsContract.Data.CUSTOM_RINGTONE, mFileName);
-			    int rowsUpdated = getContentResolver().update(localUri, localContentValues, null, null);
-			    Log.e("", "" + rowsUpdated);
-			    if (rowsUpdated > 0) {
-			    	Toast.makeText(getApplicationContext(), "Ringtone set successfully", Toast.LENGTH_SHORT).show();
-			    	hasSaved = true;
-			    }
+				localContentValues.put(ContactsContract.Data.CUSTOM_RINGTONE, mFileName);
+				int rowsUpdated = getContentResolver().update(localUri, localContentValues, null, null);
+				Log.e("", "" + rowsUpdated);
+				if (rowsUpdated > 0) {
+					Toast.makeText(getApplicationContext(), "Ringtone set successfully", Toast.LENGTH_SHORT).show();
+					mContact.ringtone = mFileName;
+					hasSaved = true;
+				}
 			}
 		});
 		vResetRingtone.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				Uri localUri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, Long.toString(mContact.id));
 				ContentValues localContentValues = new ContentValues();
-			    localContentValues.put(ContactsContract.Data.CUSTOM_RINGTONE, false);
-			    int rowsUpdated = getContentResolver().update(localUri, localContentValues, null, null);
-			    Log.e("", "" + rowsUpdated);
-			    if (rowsUpdated > 0) {
-			    	Toast.makeText(getApplicationContext(), "Ringtone reset successfully", Toast.LENGTH_SHORT).show();
-			    }
+				localContentValues.put(ContactsContract.Data.CUSTOM_RINGTONE, (String) null);
+				int rowsUpdated = getContentResolver().update(localUri, localContentValues, null, null);
+				Log.e("", "" + rowsUpdated);
+				if (rowsUpdated > 0) {
+					Toast.makeText(getApplicationContext(), "Ringtone reset successfully", Toast.LENGTH_SHORT).show();
+					mContact.ringtone = null;
+				}
 			}
 		});
 	}
-	
-	@Override
-    public void onPause() {
-        super.onPause();
-        if (mRecorder != null) {
-            mRecorder.release();
-            mRecorder = null;
-        }
 
-        if (mPlayer != null) {
-            mPlayer.release();
-            mPlayer = null;
-        }
-    }
-	
+	@Override
+	public void onPause() {
+		super.onPause();
+		if (mRecorder != null) {
+			mRecorder.release();
+			mRecorder = null;
+		}
+
+		if (mPlayer != null) {
+			mPlayer.release();
+			mPlayer = null;
+		}
+	}
+
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
@@ -153,6 +153,15 @@ public class CryActivity extends Activity {
 			mPlayer.setDataSource(mCurrentCryPath);
 			mPlayer.prepare();
 			mPlayer.start();
+			mPlayer.setOnCompletionListener(new OnCompletionListener() {
+
+				@Override
+				public void onCompletion(MediaPlayer arg0) {
+					stopPlaying();
+				}
+			});
+			vPlay.setImageBitmap(bStop);
+			isPlaying = true;
 		} catch (IOException e) {
 			Log.e("", "prepare() failed");
 		}
@@ -161,20 +170,22 @@ public class CryActivity extends Activity {
 	private void stopPlaying() {
 		mPlayer.release();
 		mPlayer = null;
+		vPlay.setImageBitmap(bPlay);
+		isPlaying = false;
 	}
-	
+
 	private void confirmRecording() {
 		new AlertDialog.Builder(this)
-			.setTitle("Record new cry?")
-			.setMessage("This will let you record a new cry for " + mContact.name + ". It will not be active until you apply it.")
-			.setPositiveButton("Ok, Record", new AlertDialog.OnClickListener() {
-				
-				@Override
-				public void onClick(DialogInterface arg0, int arg1) {
-					startRecording();
-				}
-			}).setNegativeButton("Never mind", null)
-			.show();
+				.setTitle("Record new cry?")
+				.setMessage("This will let you record a new cry for " + mContact.name + ". It will not be active until you apply it.")
+				.setPositiveButton("Ok, Record", new AlertDialog.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface arg0, int arg1) {
+						startRecording();
+					}
+				}).setNegativeButton("Never mind", null)
+				.show();
 	}
 
 	private void startRecording() {

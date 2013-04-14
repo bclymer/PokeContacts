@@ -68,7 +68,7 @@ public class ContactListFragment extends SherlockFragment implements OnItemClick
 		mOptionsListView.setAdapter(optionsAdapter);
 
 		vContactsCount = (TextView) getActivity().findViewById(R.id.contacts_fragment_contact_count);
-
+		
 		Cursor contactCursor = mContext.getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null);
 		mContacts = PokeApplication.getInstance().mContacts;
 		mContacts.clear();
