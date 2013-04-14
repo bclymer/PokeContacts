@@ -12,7 +12,7 @@
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
 
     <uses-sdk
-        android:minSdkVersion="11"
+        android:minSdkVersion="10"
         android:targetSdkVersion="17" />
 
     <application
@@ -32,7 +32,7 @@
         </activity>
         <activity
             android:name="com.bclymer.pokecontacts.CryActivity"
-            android:theme="@android:style/Theme.Holo.Light.Dialog.MinWidth" >
+            android:theme="@style/Theme.Sherlock.Dialog" >
         </activity>
     </application>
 

@@ -23,7 +23,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.bclymer.pokecontacts.database.ContactDAO;
 import com.bclymer.pokecontacts.models.Contact;
 
 public class CryActivity extends Activity {
@@ -52,14 +51,14 @@ public class CryActivity extends Activity {
 		vApplyRingtone = (Button) findViewById(R.id.cry_set_ringtone);
 		vResetRingtone = (Button) findViewById(R.id.cry_set_ringtone_default);
 
-		int contactId = getIntent().getIntExtra("contactId", -1);
-		if (contactId == -1) {
+		int contactPosition = getIntent().getIntExtra("contactId", -1);
+		if (contactPosition == -1) {
 			Toast.makeText(this, "Error Loading Cry Data", Toast.LENGTH_SHORT).show();
 			finish();
 			return;
 		}
 		
-		mContact = ContactDAO.getContactById(contactId);
+		mContact = PokeApplication.getInstance().mContacts.get(contactPosition);
 		setTitle(mContact.name + "'s Cry");
 		mFileName = getExternalFilesDir(null).getAbsolutePath();
 		mFileName += "/" + mContact.id + "-" + System.currentTimeMillis() + ".3gp";
@@ -67,10 +66,10 @@ public class CryActivity extends Activity {
 		bStop = BitmapFactory.decodeResource(getResources(), R.drawable.stop);
 		bPlay = BitmapFactory.decodeResource(getResources(), R.drawable.play);
 		
-		if (mContact.cry == null) {
+		if (mContact.ringtone == null) {
 			vPlay.setEnabled(false);
 		} else {
-			mCurrentCryPath = mContact.cry;
+			mCurrentCryPath = mContact.ringtone;
 		}
 
 		vPlay.setOnClickListener(new OnClickListener() {
@@ -99,15 +98,13 @@ public class CryActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				Uri localUri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, Integer.toString(mContact.id));
+				Uri localUri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, Long.toString(mContact.id));
 				ContentValues localContentValues = new ContentValues();
 			    localContentValues.put(ContactsContract.Data.CUSTOM_RINGTONE, mFileName);
 			    int rowsUpdated = getContentResolver().update(localUri, localContentValues, null, null);
 			    Log.e("", "" + rowsUpdated);
 			    if (rowsUpdated > 0) {
 			    	Toast.makeText(getApplicationContext(), "Ringtone set successfully", Toast.LENGTH_SHORT).show();
-			    	mContact.cry = mFileName;
-			    	ContactDAO.updateFullContact(mContact);
 			    	hasSaved = true;
 			    }
 			}
@@ -116,15 +113,13 @@ public class CryActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				Uri localUri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, Integer.toString(mContact.id));
+				Uri localUri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, Long.toString(mContact.id));
 				ContentValues localContentValues = new ContentValues();
 			    localContentValues.put(ContactsContract.Data.CUSTOM_RINGTONE, false);
 			    int rowsUpdated = getContentResolver().update(localUri, localContentValues, null, null);
 			    Log.e("", "" + rowsUpdated);
 			    if (rowsUpdated > 0) {
 			    	Toast.makeText(getApplicationContext(), "Ringtone reset successfully", Toast.LENGTH_SHORT).show();
-			    	mContact.cry = null;
-			    	ContactDAO.updateFullContact(mContact);
 			    }
 			}
 		});

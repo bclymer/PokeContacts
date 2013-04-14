@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -25,7 +26,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.bclymer.pokecontacts.database.ContactDAO;
 import com.bclymer.pokecontacts.models.Contact;
 import com.bclymer.pokecontacts.util.StringUtil;
 
@@ -68,13 +68,10 @@ public class ContactListFragment extends SherlockFragment implements OnItemClick
 		mOptionsListView.setAdapter(optionsAdapter);
 
 		vContactsCount = (TextView) getActivity().findViewById(R.id.contacts_fragment_contact_count);
-	}
 
-	@Override
-	public void onStart() {
-		super.onStart();
 		Cursor contactCursor = mContext.getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null);
-		mContacts = new ArrayList<Contact>(contactCursor.getCount());
+		mContacts = PokeApplication.getInstance().mContacts;
+		mContacts.clear();
 		while (contactCursor.moveToNext()) {
 			int id = contactCursor.getInt(contactCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID));
 			boolean dup = false;
@@ -87,11 +84,14 @@ public class ContactListFragment extends SherlockFragment implements OnItemClick
 			if (dup) {
 				continue;
 			}
+			String ringtone = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.Contacts.CUSTOM_RINGTONE));
 			String name = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
-			String thumbUri = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.PHOTO_THUMBNAIL_URI));
-			String photoUri = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.PHOTO_URI));
+			long photoId = contactCursor.getLong(contactCursor.getColumnIndex(ContactsContract.CommonDataKinds.Photo.PHOTO_ID));
+			Uri photoUri = ContentUris.withAppendedId(ContactsContract.Data.CONTENT_URI, photoId);
 			String phoneNumber = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-			mContacts.add(new Contact(id, name, thumbUri, photoUri, phoneNumber));
+			String email = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.CommonDataKinds.Email.ADDRESS));
+			String note = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.CommonDataKinds.Note.NOTE));
+			mContacts.add(new Contact(id, name, photoUri, phoneNumber, ringtone, email, note));
 		}
 		contactCursor.close();
 		Collections.sort(mContacts, new Comparator<Contact>() {
@@ -100,7 +100,6 @@ public class ContactListFragment extends SherlockFragment implements OnItemClick
 				return c1.name.compareTo(c2.name);
 			}
 		});
-		ContactDAO.createContacts(null, mContacts);
 		vContactsCount.setText(Integer.toString(mContacts.size()));
 		mAdapter = new ContactsAdapter();
 		mContactsListView.setAdapter(mAdapter);
@@ -184,10 +183,10 @@ public class ContactListFragment extends SherlockFragment implements OnItemClick
 		} else if (listView == mOptionsListView) {
 			switch (position) {
 			case DATA:
-				((ContactListFragmentCallback) getActivity()).showContact(mContacts.get(selectedIndex).id, selectedIndex + 1);
+				((ContactListFragmentCallback) getActivity()).showContact(selectedIndex, selectedIndex + 1);
 				break;
 			case CRY:
-				startActivity(new Intent(mContext, CryActivity.class).putExtra("contactId", mContacts.get(selectedIndex).id));
+				startActivity(new Intent(mContext, CryActivity.class).putExtra("contactId", selectedIndex));
 				break;
 			case AREA:
 

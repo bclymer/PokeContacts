@@ -1,43 +1,26 @@
 package com.bclymer.pokecontacts.models;
 
+import android.net.Uri;
+
 public class Contact {
 	
-	public int id;
+	public long id;
 	public String name;
-	public String thumbUri;
-	public String photoUri;
+	public Uri photoUri;
 	public String number;
-	public String description;
-	public int height;
-	public int weight;
-	public String cry;
-	public String type;
+	public String ringtone;
+	public String email;
+	public String note;
 	public int displayId;
 	
-	public Contact(int id) {
-		this.id = id;
-	}
-	
-	public Contact(int id, String name, String thumbUri, String photoUri, String number) {
+	public Contact(long id, String name, Uri photoUri, String number, String ringtone, String email, String note) {
 		this.id = id;
 		this.name = name;
-		this.thumbUri = thumbUri;
 		this.photoUri = photoUri;
 		this.number = number;
+		this.ringtone = ringtone;
+		this.email = email;
+		this.note = note;
 	}
-
-	public Contact(int id, String name, String thumbUri, String photoUri, String number, String description, int height, int weight, String cry, String type) {
-		this.id = id;
-		this.name = name;
-		this.thumbUri = thumbUri;
-		this.photoUri = photoUri;
-		this.number = number;
-		this.description = description;
-		this.height = height;
-		this.weight = weight;
-		this.cry = cry;
-		this.type = type;
-	}
-	
 	
 }

@@ -976,27 +976,21 @@ containing a value of this type.
         public static final int abs__title=0x7f04001b;
         public static final int abs__titleDivider=0x7f04001c;
         public static final int abs__up=0x7f04000b;
-        public static final int action_settings=0x7f040052;
         public static final int contact_details_center_top_pane=0x7f04003d;
-        public static final int contact_details_height=0x7f040044;
-        public static final int contact_details_height_text=0x7f040042;
-        public static final int contact_details_horizontal_line=0x7f040047;
+        public static final int contact_details_horizontal_line=0x7f040042;
         public static final int contact_details_id=0x7f04003f;
         public static final int contact_details_name=0x7f040040;
+        public static final int contact_details_number=0x7f040041;
         public static final int contact_details_photo=0x7f04003e;
-        public static final int contact_details_type=0x7f040041;
-        public static final int contact_details_weight=0x7f040045;
-        public static final int contact_details_weight_lbs=0x7f040046;
-        public static final int contact_details_weight_text=0x7f040043;
-        public static final int contacts_fragment_contact_count=0x7f04004d;
-        public static final int contacts_fragment_contents_text=0x7f040048;
-        public static final int contacts_fragment_horizontal_line=0x7f04004e;
-        public static final int contacts_fragment_horizontal_line_2=0x7f04004f;
-        public static final int contacts_fragment_listview=0x7f040049;
-        public static final int contacts_fragment_options_listview=0x7f040050;
-        public static final int contacts_fragment_own_text=0x7f04004c;
-        public static final int contacts_fragment_sidepanel=0x7f04004b;
-        public static final int contacts_fragment_vertical_line=0x7f04004a;
+        public static final int contacts_fragment_contact_count=0x7f040048;
+        public static final int contacts_fragment_contents_text=0x7f040043;
+        public static final int contacts_fragment_horizontal_line=0x7f040049;
+        public static final int contacts_fragment_horizontal_line_2=0x7f04004a;
+        public static final int contacts_fragment_listview=0x7f040044;
+        public static final int contacts_fragment_options_listview=0x7f04004b;
+        public static final int contacts_fragment_own_text=0x7f040047;
+        public static final int contacts_fragment_sidepanel=0x7f040046;
+        public static final int contacts_fragment_vertical_line=0x7f040045;
         public static final int contacts_row_id=0x7f04003b;
         public static final int contacts_row_indicator_arrow=0x7f040039;
         public static final int contacts_row_name=0x7f04003a;
@@ -1012,7 +1006,7 @@ containing a value of this type.
         public static final int homeAsUp=0x7f040006;
         public static final int listMode=0x7f040002;
         public static final int normal=0x7f040001;
-        public static final int rowTextView=0x7f040051;
+        public static final int rowTextView=0x7f04004c;
         public static final int showCustom=0x7f040008;
         public static final int showHome=0x7f040005;
         public static final int showTitle=0x7f040007;
@@ -1055,9 +1049,6 @@ containing a value of this type.
         public static final int sherlock_spinner_dropdown_item=0x7f03001c;
         public static final int sherlock_spinner_item=0x7f03001d;
         public static final int simple_row=0x7f03001e;
-    }
-    public static final class menu {
-        public static final int contacts_list=0x7f0b0000;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
@@ -1105,10 +1096,7 @@ containing a value of this type.
         /**  Description of a share target (both in the list of such or the default share button) in a ShareActionProvider (share UI). [CHAR LIMIT=NONE] 
          */
         public static final int abs__shareactionprovider_share_with_application=0x7f090009;
-        public static final int action_settings=0x7f090010;
         public static final int app_name=0x7f09000f;
-        public static final int hello_world=0x7f090011;
-        public static final int title_activity_cry=0x7f090012;
     }
     public static final class style {
         /** 

@@ -4,7 +4,6 @@ import java.util.Locale;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -14,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.bclymer.pokecontacts.database.ContactDAO;
 import com.bclymer.pokecontacts.models.Contact;
 import com.bclymer.pokecontacts.util.StringUtil;
 
@@ -24,9 +22,7 @@ public class ContactDetailsFragment extends SherlockFragment {
 	private Contact mContact;
 	private ImageView vPhoto;
 	private TextView vName;
-	private TextView vType;
-	private TextView vHeight;
-	private TextView vWeight;
+	private TextView vNumber;
 	private TextView vId;
 	
 	@Override
@@ -40,19 +36,17 @@ public class ContactDetailsFragment extends SherlockFragment {
 		super.onActivityCreated(savedInstanceState);
 		mContext = getActivity();
 		vName = ((TextView) getActivity().findViewById(R.id.contact_details_name));
-		vType = ((TextView) getActivity().findViewById(R.id.contact_details_type));
-		vHeight = ((TextView) getActivity().findViewById(R.id.contact_details_height));
-		vWeight = ((TextView) getActivity().findViewById(R.id.contact_details_weight));
+		vNumber = ((TextView) getActivity().findViewById(R.id.contact_details_number));
 		vId = ((TextView) getActivity().findViewById(R.id.contact_details_id));
 		vPhoto = ((ImageView) getActivity().findViewById(R.id.contact_details_photo));
 	}
 	
-	public void setContactId(int contactId, int displayId) {
-		mContact = ContactDAO.getContactById(contactId);
+	public void setContactId(int contactPosition, int displayId) {
+		mContact = PokeApplication.getInstance().mContacts.get(contactPosition);
 		mContact.displayId = displayId;
 		Bitmap bmpLarge = null;
 		try {
-			bmpLarge = MediaStore.Images.Media.getBitmap(mContext.getContentResolver(), Uri.parse(mContact.photoUri));
+			bmpLarge = MediaStore.Images.Media.getBitmap(mContext.getContentResolver(), mContact.photoUri);
 			if (bmpLarge == null) {
 				bmpLarge = ImageManager.defaultIconFull;
 			}
@@ -61,10 +55,8 @@ public class ContactDetailsFragment extends SherlockFragment {
 		}
 		vPhoto.setImageBitmap(ImageManager.getRoundedCornerBitmap(bmpLarge, 15, 96, 96));
 		vName.setText(mContact.name.toUpperCase(Locale.US));
-		vType.setText(mContact.type == null ? "TYPE" : mContact.type.toUpperCase(Locale.US));
-		vHeight.setText(inchesToFormattedHeight(mContact.height));
-		vWeight.setText(mContact.weight + ".0");
 		vId.setText("No. " + StringUtil.pad(Integer.toString(mContact.displayId), 3, '0'));
+		vNumber.setText(mContact.number);
 	}
 	
 	public String inchesToFormattedHeight(int inches) {
