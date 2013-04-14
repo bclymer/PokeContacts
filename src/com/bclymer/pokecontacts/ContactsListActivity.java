@@ -3,7 +3,6 @@ package com.bclymer.pokecontacts;
 import android.os.Bundle;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
 import com.bclymer.pokecontacts.ContactListFragment.ContactListFragmentCallback;
 
 public class ContactsListActivity extends SherlockFragmentActivity implements ContactListFragmentCallback {
@@ -20,11 +19,6 @@ public class ContactsListActivity extends SherlockFragmentActivity implements Co
 		mContactDetailsFragment = (ContactDetailsFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_contacts_details);
 		
 		showContactsList();
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		return super.onCreateOptionsMenu(menu);
 	}
 	
 	@Override

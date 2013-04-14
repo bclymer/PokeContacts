@@ -1,6 +1,7 @@
 package com.bclymer.pokecontacts.util;
 
 public class StringUtil {
+	
 	public static String pad(String str, int size, char padChar) {
 		StringBuffer padded = new StringBuffer(str);
 		while (padded.length() < size) {

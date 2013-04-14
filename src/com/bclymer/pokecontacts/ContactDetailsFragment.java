@@ -58,13 +58,4 @@ public class ContactDetailsFragment extends SherlockFragment {
 		vId.setText("No. " + StringUtil.pad(Integer.toString(mContact.displayId), 3, '0'));
 		vNumber.setText(mContact.number);
 	}
-	
-	public String inchesToFormattedHeight(int inches) {
-		StringBuilder str = new StringBuilder();
-		str.append(inches / 12);
-		str.append("'");
-		str.append(inches % 12);
-		str.append("\"");
-		return str.toString();
-	}
 }
